@@ -4,6 +4,7 @@ This is a test of different markers, using the fantastic https://github.com/jero
 The markers are pretty bad, I wanted to know how will it work with random pictures inside the marker outline.
 
 Check it out at: https://cdn.rawgit.com/gftruj/aframe-experients/9c946916/AR.js/customMarkers/index.html
+![And Have fun !](ar.png)
 
 ## Assets
 
