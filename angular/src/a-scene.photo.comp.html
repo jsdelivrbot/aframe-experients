@@ -1,0 +1,14 @@
+   <!--PHOTO PREVIEW-->
+  
+  Select a photo on the a-sky:
+  <select [(ngModel)]="photoAsset">
+   <option value="0">Berlin360
+   <option value="1">Hill360
+  </select>
+  
+  
+    <a-scene embedded>
+       <a-sky *ngIf="photoAsset==0" src="https://upload.wikimedia.org/wikipedia/commons/6/65/SonyCenter_360panorama.jpg" rotation="0 -130 0"></a-sky>
+       <a-sky *ngIf="photoAsset==1" src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Helvellyn_Striding_Edge_360_Panorama%2C_Lake_District_-_June_09.jpg" rotation="0 -130 0"></a-sky>
+    </a-scene>
+    <p> Photos aquired @wikipedia.com, may be huge and take a sec. to load </p>
