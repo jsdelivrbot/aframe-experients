@@ -1,5 +1,5 @@
 # glTF and json Model example.
-* Check it out @ https://cdn.rawgit.com/gftruj/aframe-examples/75d949c3/models/index.html
+* Check it out @ https://cdn.rawgit.com/gftruj/aframe-experients/0f244e3b/models/index.html
 ### the json bot model has working animations
 ### sources are on site, but still:
 
