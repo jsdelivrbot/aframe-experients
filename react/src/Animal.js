@@ -8,22 +8,22 @@ class Animal extends React.Component{
     this.rotation = props.rot;
     switch (props.src){
       case "deer":
-        this.source = "https://cdn.glitch.com/799d4a0b-ee0f-4b75-9369-15fb8b5f13ef%2FLow-Poly-Chromatic-Leaping-Deer-Silhouette-2400px.png?1501804062663";
+        this.source = "https://cdn.glitch.com/af3f12d2-c9e1-4a3b-98e0-d295d05745e5%2FLow-Poly-Chromatic-Leaping-Deer-Silhouette-2400px.png?1501807525346";
         break;
       case "unicorn":
-        this.source = "https://cdn.glitch.com/799d4a0b-ee0f-4b75-9369-15fb8b5f13ef%2FChromatic-Triangular-Unicorn-Silhouette-2400px.png?1501804112867";
+        this.source = "https://cdn.glitch.com/af3f12d2-c9e1-4a3b-98e0-d295d05745e5%2FChromatic-Triangular-Unicorn-Silhouette-2400px.png?1501807526520";
         break;
       case "fatcat":
-        this.source = "https://cdn.glitch.com/799d4a0b-ee0f-4b75-9369-15fb8b5f13ef%2FLow-Poly-Prismatic-Fluffy-Cat-2-Silhouette-2400px.png?1501804580069";
+        this.source = "https://cdn.glitch.com/af3f12d2-c9e1-4a3b-98e0-d295d05745e5%2FLow-Poly-Prismatic-Fluffy-Cat-2-Silhouette-2400px.png?1501807527592";
         break;
       case "cat":
-        this.source = "https://cdn.glitch.com/799d4a0b-ee0f-4b75-9369-15fb8b5f13ef%2FPrismatic-Low-Poly-Kitten-Playing-With-Butterflies-2400px.png?1501804598489";
+        this.source = "https://cdn.glitch.com/af3f12d2-c9e1-4a3b-98e0-d295d05745e5%2FPrismatic-Low-Poly-Kitten-Playing-With-Butterflies-2400px.png?1501807529174";
         break;
       case "elephant":
-        this.source = "https://cdn.glitch.com/799d4a0b-ee0f-4b75-9369-15fb8b5f13ef%2FVivid-Chromatic-Elephant-Silhouette-2400px.png?1501804615460";
+        this.source = "https://cdn.glitch.com/af3f12d2-c9e1-4a3b-98e0-d295d05745e5%2FVivid-Chromatic-Elephant-Silhouette-2400px.png?1501807533587";
         break;
       case "peacock":
-        this.source = "https://cdn.glitch.com/799d4a0b-ee0f-4b75-9369-15fb8b5f13ef%2FChromatic-Peacock-7-No-Background-2400px.png?1501804627147";
+        this.source = "https://cdn.glitch.com/af3f12d2-c9e1-4a3b-98e0-d295d05745e5%2FChromatic-Peacock-7-No-Background-2400px.png?1501807532653";
         break;
     }
   }
