@@ -1,0 +1,190 @@
+<html>
+<head>
+<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/gftruj/aframe-refraction-system/8a43ae35/aframe-refraction-system.js">
+
+
+</script>
+<script>
+  AFRAME.registerComponent('rmmapping', {
+    schema: {
+      metalness: {
+        default: ""
+      },
+      roughness: {
+        default: ""
+      }
+    },
+    update: function() {
+      let data = this.data;
+      let mesh = this.el.getObject3D('mesh');
+      if (mesh) {
+        this.loadMap(1, data.metalness);
+        this.loadMap(0, data.roughness);
+      }
+    },
+    loadMap: function(mode, url) {
+      let mesh = this.el.getObject3D('mesh');
+      new THREE.TextureLoader().load(url,
+        function(texture) {
+          if (mode == 1) {
+            mesh.material.metalness = 1;
+            mesh.material.metalnessMap = texture;
+          } else {
+            mesh.material.roughness = 1;
+            mesh.material.roughnessMap = texture;
+          }
+        },
+        function(xhr) {
+          //no need to change anything while loading
+        },
+        function(xhr) {
+          //no need to do anything on error
+        });
+    }
+  });
+
+ AFRAME.registerComponent('expo', {
+    schema: {
+      metalness: {},
+      roughness: {}
+    },
+    init: function() {
+      let metalPlane = document.createElement('a-plane');
+      let metalSub = document.createElement('a-entity');
+      let roughPlane = document.createElement('a-plane');
+      let roughSub = document.createElement('a-entity');
+      let geometry = {
+        width: 0.5,
+        height: 0.5
+      };
+
+      metalPlane.setAttribute('geometry', geometry);
+      roughPlane.setAttribute('geometry', geometry);
+      setTextAttribute(metalSub,'Metalness');
+      setTextAttribute(roughSub,'Roughness');
+      function setTextAttribute(el,text){
+          el.setAttribute('text',{
+            color: 'white',
+            value: text
+          })
+      }
+      this.el.appendChild(metalPlane);
+      this.el.appendChild(roughPlane);
+
+      metalPlane.setAttribute('material', 'src', this.data.metalness);
+      roughPlane.setAttribute('material', 'src', this.data.roughness);
+
+      metalPlane.appendChild(metalSub);
+      roughPlane.appendChild(roughSub);
+
+      metalPlane.setAttribute('position', '0.5 -1.25 0');
+      metalSub.setAttribute('position', '0.75 0.3 0');
+      metalSub.setAttribute('scale', '2 2 2');
+
+
+      roughSub.setAttribute('position', '0.75 0.3 0');
+      roughSub.setAttribute('scale', '2 2 2');
+
+      roughPlane.setAttribute('position', '-0.5 -1.25 0');
+    }
+  });
+
+AFRAME.registerComponent('selectrm',{
+  schema:{
+
+  },
+  init:function(){
+     let textEntities = ["metal","rough"];
+     let metalLinks = ["assets/mm.jpg","assets/metalnessLineMap.jpg","assets/metalnessGradient.png","assets/metalnessCustom.png"];
+     let roughnessLinks = ["assets/rm.jpg","assets/roughnessLineMap.jpg","assets/roughnessGradient.png","assets/roughPaw.png"]
+     textEntities[0] = document.createElement("a-entity");
+     textEntities[1] = document.createElement("a-entity");
+     textEntities[0].setAttribute('text', {
+        color: 'white',
+        value: "Metalness:"
+      });
+     textEntities[1].setAttribute('text', {
+        color: 'white',
+        value: "Roughness:"
+      });   
+     textEntities[0].setAttribute('position','2 1 0');
+     textEntities[1].setAttribute('position','-0.6 1 0');
+     textEntities[0].setAttribute('scale','2 2 2');
+     textEntities[1].setAttribute('scale','2 2 2');
+
+     this.el.appendChild(textEntities[0]);
+     this.el.appendChild(textEntities[1]);
+
+     let planeCount = ["1","2","3","4"];
+     let i = 0;
+     let geometry = {
+        width: 0.25,
+        height: 0.25
+      };
+     for(plane in planeCount){
+      plane = document.createElement('a-plane');
+      plane.setAttribute('position',{x:1.25,y:0.75-i/2,z:0});
+      plane.setAttribute('geometry',geometry);
+      plane.setAttribute('material','src',metalLinks[i]);
+      plane.addEventListener("click",rmap(this,'metalness',metalLinks[i]));
+      this.el.appendChild(plane);
+      i++;
+     }
+     i = 0;
+     for(plane in planeCount){
+      plane = document.createElement('a-plane');
+      plane.setAttribute('position',{x:-1.25,y:0.75-i/2,z:0});
+      plane.setAttribute('geometry',geometry);
+      plane.setAttribute('material','src',roughnessLinks[i]);
+      plane.addEventListener("click",rmap(this,'roughness',roughnessLinks[i]));
+      this.el.appendChild(plane);
+      i++;
+     }
+      function rmap(t,attribute,link){
+      return ()=>{
+        t.el.setAttribute('rmmapping',attribute,link);
+      }
+     }
+    }
+  });
+</script>
+</head>
+<body>
+<a-scene cursor="rayOrigin: mouse">
+<a-assets>
+    <a-mixin id="icyCircle" material="opacity:0.9;color:#aabbcc;normalMap:assets/images.jpg" refraction-component></a-mixin>
+</a-assets>
+
+  <a-camera position="0.2 0 -0.5">
+  </a-camera>
+
+  <a-circle position="-1 1.7 -0" rotation="0 90 0" mixin="icyCircle"
+  rmmapping="metalness:assets/mm.jpg;roughness:assets/rm.jpg"
+  expo="metalness:assets/mm.jpg;roughness:assets/rm.jpg;">
+  </a-circle>
+
+  <a-circle position="-0.3 1.7 -1.7" rotation="0 45 0" mixin="icyCircle"
+  rmmapping="metalness:assets/metalnessGradient.png;roughness:assets/roughnessGradient.png"
+  expo="metalness:assets/metalnessGradient.png;roughness:assets/roughnessGradient.png;">
+  </a-circle>
+
+  <a-circle position="-0.3 1.7 1.7" rotation="0 135 0" mixin="icyCircle"
+  rmmapping="metalness:assets/metalnessLineMap.jpg;roughness:assets/roughnessLineMap.jpg"
+  expo="metalness:assets/metalnessLineMap.jpg;roughness:assets/roughnessLineMap.jpg;">
+  </a-circle>
+  <a-circle position="1.4 1.7 -2.35" rotation="0 0 0" mixin="icyCircle"
+  rmmapping="roughness:assets/roughPaw.png;metalness:assets/metalnessCustom.png"
+  expo="roughness:assets/roughPaw.png;metalness:assets/metalnessCustom.png">
+  </a-circle>
+
+  <a-circle position="2.25 1.7 0.5" rotation="0 -118 0" mixin="icyCircle"
+  rmmapping="roughness:assets/roughPaw.png;metalness:assets/metalnessCustom.png"
+  selectrm>
+  </a-circle>
+
+  <a-sky radius="30" rotation="0 -90 10" material="src:assets/w2Sphere.jpg"></a-sky>
+ 
+</a-scene>
+</body>
+</html>
