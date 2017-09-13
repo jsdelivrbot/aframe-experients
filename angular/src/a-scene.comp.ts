@@ -14,10 +14,8 @@ export class aScene {
   preview:string;
   photoAsset:string;
   R:number;
-  recording:bool;
   simpleLight: bool;
   selectedBulb:bool;
-  selectedRec:bool;
   
   HEX: string;
   
@@ -29,50 +27,8 @@ export class aScene {
     this.R=255;
     this.simpleLight = false;
     this.selectedBulb = false;
-    this.selectedRec = false;
-    this.recording = false;
   }
-  record():void{
-    if(!this.selectedRec){
-      console.log("recordCheck");
-      this.startDictation();
-      this.selectedRec = true;
-    }
-  }
-   startDictation():void {
-    console.log("start dictaction");
-    if (window.hasOwnProperty('webkitSpeechRecognition')) {
-      console.log("start");
-      var recognition = new webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = "en-US";
-      recognition.start();
-      console.log("start");
-      recognition.onresult = (e)=>{
-        document.getElementById('transcript').value
-                                 = e.results[0][0].transcript;
-        recognition.stop();
-        if(e.results[0][0].transcript=="lights on"){
-          this.simpleLight = true; 
-        }
-        if(e.results[0][0].transcript=="lights off"){
-          this.simpleLight = false; 
-        }
-        if(e.results[0][0].transcript=="cube"){
-          this.simpleAsset = 1; 
-        } 
-      };
-      recognition.onaudioend=(e)=>{
-        this.selectedRec=false;
-
-      }
-      recognition.onerror = function(e) {
-        recognition.stop();
-
-      }
-    }
-   }
+  
   toggleSimpleLight() : void{
     this.simpleLight=!this.simpleLight;
   }
